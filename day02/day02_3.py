@@ -4,8 +4,8 @@ import random
 import time
 
 AIO_FEED_ID = ['nutnhan1', 'nutnhan2']
-AIO_USERNAME = "kha23mse23099"
-AIO_KEY = "aio_BLpt39wdTvHBK4KVFdtszCl2IcbJ"
+AIO_USERNAME = ""
+AIO_KEY = ""
 
 def connected(client):
     print("Ket noi thanh cong ...")
@@ -22,7 +22,7 @@ def disconnected(client):
 def message(client , feed_id , payload):
     print("Nhan du lieu: " + payload)
 
-client = MQTTClient(AIO_USERNAME , AIO_KEY)
+client = MQTTClient(AIO_USERNAME , AIO_KEY, secure=False)
 client.on_connect = connected
 client.on_disconnect = disconnected
 client.on_message = message
