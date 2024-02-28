@@ -9,10 +9,10 @@ import time
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = load_model("keras_Model.h5", compile=False)
+model = load_model("day03/keras_Model.h5", compile=False)
 
 # Load the labels
-class_names = open("labels.txt", "r").readlines()
+class_names = open("day03/labels.txt", "r").readlines()
 
 # CAMERA can be 0 or 1 based on default camera of your computer
 camera = cv2.VideoCapture(0)
@@ -89,7 +89,7 @@ while True:
         # Print prediction and confidence score
         print("Class:", class_name[2:], end="")
         print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
-        client.publish('cambien1', class_name[2:])
+        client.publish('ai', class_name[2:])
         # Listen to the keyboard for presses.
         keyboard_input = cv2.waitKey(1)
 
