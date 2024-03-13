@@ -44,8 +44,8 @@ try:
 except:
     print("Can not open the port")
 
-relay1_ON  = [2, 6, 0, 0, 0, 255, 200, 91]
-relay1_OFF = [2, 6, 0, 0, 0, 0, 136, 27]
+relay1_ON  = [2, 6, 0, 0, 0, 255, 101, 218]
+relay1_OFF = [2, 6, 0, 0, 0, 0, 194, 92]
 # relay1_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
 # relay1_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
     
@@ -57,11 +57,11 @@ def setDevice1(state):
     time.sleep(1)
     print(serial_read_data(ser))
 
-# while True:
-#     setDevice1(True)
-#     time.sleep(2)
-#     setDevice1(False)
-#     time.sleep(2)
+while True:
+    setDevice1(True)
+    time.sleep(2)
+    setDevice1(False)
+    time.sleep(2)
 
 
 
