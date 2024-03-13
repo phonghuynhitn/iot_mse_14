@@ -81,5 +81,5 @@ while True:
     print("TEST SENSOR")
     print(readMoisture())
     time.sleep(1)
-    print(readTemperature())
-    time.sleep(1)
+    # print(readTemperature())
+    # time.sleep(1)
