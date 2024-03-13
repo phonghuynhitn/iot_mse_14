@@ -20,11 +20,12 @@ public class MQTTHelper {
 
     public final String[] arrayTopics = {"phong23mse23098/feeds/cambien1", "phong23mse23098/feeds/cambien2", "phong23mse23098/feeds/nutnhan1", "phong23mse23098/feeds/nutnhan2"};
 
-    final String clientId = "12343435678";
+    final String clientId = "123434356334444478";
     final String username = "phong23mse23098";
     final String password = "aio_BGzM73BNGPnj8vjYzum9wPNop6yu";
 
-    final String serverUri = "tcp://io.adafruit.com:1883";
+//    final String serverUri = "tcp://io.adafruit.com:1883";
+    final String serverUri = "tcp://mqtt.ohstem.vn:1883";
 
     public MQTTHelper(Context context){
         mqttAndroidClient = new MqttAndroidClient(context, serverUri, clientId);
