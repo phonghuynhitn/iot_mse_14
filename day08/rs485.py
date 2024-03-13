@@ -24,7 +24,10 @@ def serial_read_data(ser):
     if bytesToRead > 0:
         out = ser.read(bytesToRead)
         data_array = [b for b in out]
+        print('-data1-')
         print(data_array)
+        print('-data2-')
+
         if len(data_array) >= 7:
             array_size = len(data_array)
             value = data_array[array_size - 4] * 256 + data_array[array_size - 3]
@@ -51,11 +54,11 @@ def setDevice1(state):
     time.sleep(1)
     print(serial_read_data(ser))
 
-while True:
-    setDevice1(True)
-    time.sleep(2)
-    setDevice1(False)
-    time.sleep(2)
+# while True:
+#     setDevice1(True)
+#     time.sleep(2)
+#     setDevice1(False)
+#     time.sleep(2)
 
 
 
