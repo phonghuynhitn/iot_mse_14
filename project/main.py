@@ -1,20 +1,18 @@
 #  pip install paho-mqtt==1.6.1
 import paho.mqtt.client as mqtt
 import time
-from rs485 import *
+from sensors_and_actuators import *
 
 MQTT_SERVER = "mqtt.ohstem.vn"
 MQTT_PORT = 1883
 MQTT_USERNAME = "mse14-group2"
 MQTT_PASSWORD = "1234"
-# MQTT_TOPIC_PUB = MQTT_USERNAME + "/feeds/V1"
-# MQTT_TOPIC_SUB = MQTT_USERNAME + "/feeds/V1"
-MQTT_TOPIC_PUB =  [MQTT_USERNAME + "/feeds/temperature", MQTT_USERNAME + "/feeds/moisture"]
-MQTT_TOPIC_SUB = [MQTT_USERNAME + "/feeds/relay02", MQTT_USERNAME + "/feeds/relay03", MQTT_USERNAME + "/feeds/relay04"]
+MQTT_TOPIC_PUB = [f"{MQTT_USERNAME}/feeds/temperature", f"{MQTT_USERNAME}/feeds/moisture"]
+MQTT_TOPIC_SUB = [f"{MQTT_USERNAME}/feeds/relay02", f"{MQTT_USERNAME}/feeds/relay03", f"{MQTT_USERNAME}/feeds/relay04"]
 
 temperature_index = 0
 moisture_index = 1
-
+sensors_and_actuators = SensorsAndActuators()
 
 def mqtt_connected(client, userdata, flags, rc):
     for feed in MQTT_TOPIC_SUB:
@@ -28,7 +26,6 @@ def mqtt_subscribed(client, userdata, mid, granted_qos):
 def message(client , feed_id , payload):
     print("Recieved: " + str(payload.payload.decode('utf-8')))
 
-
 mqttClient = mqtt.Client()
 mqttClient.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 mqttClient.connect(MQTT_SERVER, int(MQTT_PORT), 60)
@@ -41,12 +38,12 @@ mqttClient.loop_start()
 
 counter = 0
 while True:
-    temperature = readTemperature()
+    temperature = sensors_and_actuators.read_temperature()
     print(f"Nhiet do:", temperature)
     if temperature > 0:
         mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature)
 
-    moisture = readMoisture()
+    moisture = sensors_and_actuators.read_moisture()
     print(f"Do am:", moisture)
     if moisture > 0:
         mqttClient.publish(MQTT_TOPIC_PUB[moisture_index], moisture)
