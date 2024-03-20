@@ -40,11 +40,11 @@ counter = 0
 while True:
     temperature = sensors_and_actuators.read_temperature()
     print(f"Nhiet do:", temperature)
-    if temperature > 0:
-        mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature)
+    # if temperature > 0:
+    mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature)
 
     moisture = sensors_and_actuators.read_moisture()
     print(f"Do am:", moisture)
-    if moisture > 0:
-        mqttClient.publish(MQTT_TOPIC_PUB[moisture_index], moisture)
+    # if moisture > 0:
+    mqttClient.publish(MQTT_TOPIC_PUB[moisture_index], moisture)
     time.sleep(1)
