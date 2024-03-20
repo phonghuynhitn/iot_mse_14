@@ -91,9 +91,9 @@ def setRelay4(state):
     print(serial_read_data(ser))
 
 while True:
-    setRelay2(True)
+    # setRelay2(True)
     getStatusRelay2()
-    time.sleep(2)
+    time.sleep(1)
 #     setDevice1(True)
 #     time.sleep(2)
 #     setDevice1(False)
