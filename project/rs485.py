@@ -33,7 +33,7 @@ def serial_read_data(ser):
             return value
         else:
             return -1
-    return 0
+    return -2
 
 def serial_write_data(data):
     ser.write(data)
@@ -50,6 +50,8 @@ except:
 # relay1_OFF = [2, 6, 0, 0, 0, 0, 194, 92]
 # relay1_ON  = [3, 6, 0, 0, 0, 255, 200, 104]
 # relay1_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
+    
+relay2_STATUS  = [2, 3, 0, 1, 0, 1, 213, 249]
 relay2_ON  = [2, 6, 0, 0, 0, 255, 201, 185]
 relay2_OFF = [2, 6, 0, 0, 0, 0, 137, 249]
 
@@ -58,7 +60,12 @@ relay3_OFF = [3, 6, 0, 0, 0, 0, 136, 40]
 
 relay4_ON  = [4, 6, 0, 0, 0, 255, 201, 223]
 relay4_OFF = [4, 6, 0, 0, 0, 0, 137, 159]
-    
+
+def getStatusRelay2():
+    ser.write(relay2_STATUS)
+    time.sleep(1)
+    print(serial_read_data(ser))
+
 def setRelay2(state):
     if state == True:
         ser.write(relay2_ON)
@@ -83,7 +90,9 @@ def setRelay4(state):
     time.sleep(1)
     print(serial_read_data(ser))
 
-# while True:
+while True:
+    getStatusRelay2()
+    time.sleep(2)
 #     setDevice1(True)
 #     time.sleep(2)
 #     setDevice1(False)
