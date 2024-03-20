@@ -93,7 +93,6 @@ def setRelay4(state):
 
 while True:
     setRelay2(True)
-    time.sleep(2)
     getStatusRelay2()
     time.sleep(2)
 #     setDevice1(True)
