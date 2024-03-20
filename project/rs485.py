@@ -62,6 +62,7 @@ relay4_ON  = [4, 6, 0, 0, 0, 255, 201, 223]
 relay4_OFF = [4, 6, 0, 0, 0, 0, 137, 159]
 
 def getStatusRelay2():
+    print('getStatusRelay2')
     ser.write(relay2_STATUS)
     time.sleep(1)
     print(serial_read_data(ser))
