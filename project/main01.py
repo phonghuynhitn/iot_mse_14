@@ -66,9 +66,10 @@ mqttClient.loop_start()
 def process_temperature():
     global counter
     if counter <= 0:
-        # temperature = sensors_and_actuators.read_temperature()
+        temperature = sensors_and_actuators.read_temperature()
         if temperature is not None:
             # print("Nhiệt độ: {:.1f}°C".format(temperature))
+            predictor.write_temperature_to_file(temperature)
             predictor.train_model()
             predicted_temperature = predictor.predict_next_temperature()
             print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
@@ -79,13 +80,27 @@ def process_temperature():
 
 counter = 1
 while True:
-    counter = counter - 1
     temperature = sensors_and_actuators.read_temperature()
-    predictor.write_temperature_to_file(temperature)
-    print(f"Nhiet do:", temperature)\
-    # Start the temperature processing thread
-    temperature_thread = threading.Thread(target=process_temperature)
-    temperature_thread.start()
+    print(f"Nhiet do:", temperature)
+    counter = counter - 1
+    # if(counter <= 0):
+    #     if temperature is not None:
+    #         print("Nhiệt độ: {:.1f}°C".format(temperature))
+
+    #         predictor.write_temperature_to_file(temperature)
+
+    #         predictor.train_model()
+
+    #         predicted_temperature = predictor.predict_next_temperature()
+    #         print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
+    #     else:
+    #         print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
+    #     counter = 1
+    if counter <= 0:
+        # Start the temperature processing thread
+        temperature_thread = threading.Thread(target=process_temperature)
+        temperature_thread.start()
+        counter = 1
     # if temperature > 0:
     mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature, retain=True)
 
