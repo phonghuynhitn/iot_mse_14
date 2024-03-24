@@ -83,19 +83,6 @@ while True:
     temperature = sensors_and_actuators.read_temperature()
     print(f"Nhiet do:", temperature)
     counter = counter - 1
-    # if(counter <= 0):
-    #     if temperature is not None:
-    #         print("Nhiệt độ: {:.1f}°C".format(temperature))
-
-    #         predictor.write_temperature_to_file(temperature)
-
-    #         predictor.train_model()
-
-    #         predicted_temperature = predictor.predict_next_temperature()
-    #         print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
-    #     else:
-    #         print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
-    #     counter = 1
     if counter <= 0:
         # Start the temperature processing thread
         temperature_thread = threading.Thread(target=process_temperature)
