@@ -62,7 +62,7 @@ mqttClient.on_subscribe = mqtt_subscribed
 mqttClient.on_message =  message
 mqttClient.loop_start()
 
-counter = 60
+counter = 1
 while True:
     temperature = sensors_and_actuators.read_temperature()
     print(f"Nhiet do:", temperature)
@@ -79,7 +79,7 @@ while True:
             print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
         else:
             print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
-        counter = 60
+        counter = 1
     # if temperature > 0:
     mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature, retain=True)
 
