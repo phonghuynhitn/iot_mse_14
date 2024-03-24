@@ -85,10 +85,10 @@ def process_temperature():
         print("Dự đoán nhiệt độ cho phút tới: {:.1f}".format(predicted_temperature))
         # else:
         #     print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
-        counter = 60
+        counter = 5
 
 
-counter = 60
+counter = 5
 while True:
     temperature = sensors_and_actuators.read_temperature()
     predictor.write_temperature_to_file(temperature)
@@ -98,7 +98,7 @@ while True:
         # Start the temperature processing thread
         temperature_thread = threading.Thread(target=process_temperature)
         temperature_thread.start()
-        counter = 60
+        counter = 5
     # if temperature > 0:
     mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature, retain=True)
 
