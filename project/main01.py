@@ -78,8 +78,8 @@ def process_temperature():
 
 
 counter = 1
-temperature = 0
 while True:
+    counter = counter - 1
     temperature = sensors_and_actuators.read_temperature()
     predictor.write_temperature_to_file(temperature)
     print(f"Nhiet do:", temperature)\
