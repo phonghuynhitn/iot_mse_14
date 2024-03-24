@@ -21,8 +21,9 @@ class TemperaturePredictor:
         with open(self.file_path, "r") as file:
             for line in file:
                 timestamp, temperature = line.strip().split(", ")
-                timestamps.append(datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S"))
-                temperatures.append(float(temperature))
+                if temperature > 0:
+                    timestamps.append(datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S"))
+                    temperatures.append(float(temperature))
         return timestamps, temperatures
 
     def train_model(self):

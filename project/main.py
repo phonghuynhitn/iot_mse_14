@@ -2,6 +2,7 @@
 import paho.mqtt.client as mqtt
 import time
 from sensors_and_actuators import *
+from model import *
 
 MQTT_SERVER = "mqtt.ohstem.vn"
 MQTT_PORT = 1883
@@ -18,6 +19,8 @@ relay03_index = 1
 relay04_index = 2
 
 sensors_and_actuators = SensorsAndActuators()
+file_path = "temperature_data.txt"
+predictor = TemperaturePredictor(file_path)
 
 def mqtt_connected(client, userdata, flags, rc):
     for feed in MQTT_TOPIC_SUB:
@@ -59,10 +62,24 @@ mqttClient.on_subscribe = mqtt_subscribed
 mqttClient.on_message =  message
 mqttClient.loop_start()
 
-counter = 0
+counter = 60
 while True:
     temperature = sensors_and_actuators.read_temperature()
     print(f"Nhiet do:", temperature)
+    counter = counter - 1
+    if(counter <= 0):
+        if temperature is not None:
+            print("Nhiệt độ: {:.1f}°C".format(temperature))
+
+            predictor.write_temperature_to_file(temperature)
+
+            predictor.train_model()
+
+            predicted_temperature = predictor.predict_next_temperature()
+            print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
+        else:
+            print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
+        counter = 60
     # if temperature > 0:
     mqttClient.publish(MQTT_TOPIC_PUB[temperature_index], temperature, retain=True)
 
