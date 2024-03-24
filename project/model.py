@@ -21,7 +21,7 @@ class TemperaturePredictor:
         with open(self.file_path, "r") as file:
             for line in file:
                 timestamp, temperature = line.strip().split(", ")
-                if temperature > 0:
+                if float(temperature) > 0:
                     timestamps.append(datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S"))
                     temperatures.append(float(temperature))
         return timestamps, temperatures
