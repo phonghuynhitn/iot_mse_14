@@ -64,18 +64,27 @@ mqttClient.on_subscribe = mqtt_subscribed
 mqttClient.on_message =  message
 mqttClient.loop_start()
 
+#32*C
+threshold = 3200
+
 def process_temperature():
     global counter
     if counter <= 0:
         # temperature = sensors_and_actuators.read_temperature()
-        if temperature is not None:
-            # print("Nhiệt độ: {:.1f}°C".format(temperature))
-            predictor.train_model()
-            predicted_temperature = predictor.predict_next_temperature()
-            mqttClient.publish(MQTT_TOPIC_PUB[predict_temperature_index], predicted_temperature)
-            print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
+        # if temperature is not None:
+        # print("Nhiệt độ: {:.1f}°C".format(temperature))
+        predictor.train_model()
+        predicted_temperature = predictor.predict_next_temperature()
+        # mqttClient.publish(MQTT_TOPIC_PUB[predict_temperature_index], predicted_temperature)
+        if float(predicted_temperature) > threshold:
+            mqttClient.publish(MQTT_TOPIC_PUB[predict_temperature_index], "Dự báo nhiệt độ trong thời gian tới: {:.1f}°C. Cảnh báo nhiệt độ tăng quá cao!".format(temperature))
+            print("Cảnh báo: Nhiệt độ cao!")
         else:
-            print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
+            mqttClient.publish(MQTT_TOPIC_PUB[predict_temperature_index], "Dự báo nhiệt độ trong thời gian tới: {:.1f}°C. Tình trạng bình thường".format(temperature))
+            print("Tình trạng bình thường")
+        print("Dự đoán nhiệt độ cho phút tới: {:.1f}".format(predicted_temperature))
+        # else:
+        #     print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
         counter = 1
 
 
