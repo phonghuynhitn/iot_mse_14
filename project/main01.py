@@ -65,12 +65,10 @@ mqttClient.loop_start()
 
 def process_temperature():
     global counter
-    global temperature
     if counter <= 0:
         # temperature = sensors_and_actuators.read_temperature()
         if temperature is not None:
             # print("Nhiệt độ: {:.1f}°C".format(temperature))
-            predictor.write_temperature_to_file(temperature)
             predictor.train_model()
             predicted_temperature = predictor.predict_next_temperature()
             print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
@@ -83,6 +81,7 @@ counter = 1
 temperature = 0
 while True:
     temperature = sensors_and_actuators.read_temperature()
+    predictor.write_temperature_to_file(temperature)
     print(f"Nhiet do:", temperature)
     counter = counter - 1
     # if(counter <= 0):
