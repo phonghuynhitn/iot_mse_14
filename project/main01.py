@@ -9,11 +9,12 @@ MQTT_SERVER = "mqtt.ohstem.vn"
 MQTT_PORT = 1883
 MQTT_USERNAME = "mse14-group2"
 MQTT_PASSWORD = "1234"
-MQTT_TOPIC_PUB = [f"{MQTT_USERNAME}/feeds/temperature", f"{MQTT_USERNAME}/feeds/moisture"]
+MQTT_TOPIC_PUB = [f"{MQTT_USERNAME}/feeds/temperature", f"{MQTT_USERNAME}/feeds/moisture", f"{MQTT_USERNAME}/feeds/predict_temperature_content"]
 MQTT_TOPIC_SUB = [f"{MQTT_USERNAME}/feeds/relay02", f"{MQTT_USERNAME}/feeds/relay03", f"{MQTT_USERNAME}/feeds/relay04"]
 
 temperature_index = 0
 moisture_index = 1
+predict_temperature_index = 0
 
 relay02_index = 0
 relay03_index = 1
@@ -71,6 +72,7 @@ def process_temperature():
             # print("Nhiệt độ: {:.1f}°C".format(temperature))
             predictor.train_model()
             predicted_temperature = predictor.predict_next_temperature()
+            mqttClient.publish(MQTT_TOPIC_PUB[predict_temperature_index], predicted_temperature)
             print("Dự đoán nhiệt độ cho phút tới: {:.1f}°C".format(predicted_temperature))
         else:
             print("Không thể đọc dữ liệu từ cảm biến. Thử lại sau.")
