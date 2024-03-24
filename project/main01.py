@@ -69,9 +69,9 @@ while True:
     counter = counter - 1
     if(counter <= 0):
         if temperature is not None:
-            print("Nhiệt độ: {:.1f}°C".format(temperature / 100))
+            print("Nhiệt độ: {:.1f}°C".format(temperature))
 
-            predictor.write_temperature_to_file(temperature / 100)
+            predictor.write_temperature_to_file(temperature)
 
             predictor.train_model()
 
