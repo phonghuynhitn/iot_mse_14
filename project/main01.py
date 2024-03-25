@@ -14,7 +14,7 @@ MQTT_TOPIC_SUB = [f"{MQTT_USERNAME}/feeds/relay02", f"{MQTT_USERNAME}/feeds/rela
 
 temperature_index = 0
 moisture_index = 1
-predict_temperature_index = 0
+predict_temperature_index = 2
 
 relay02_index = 0
 relay03_index = 1
